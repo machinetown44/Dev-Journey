@@ -40,7 +40,8 @@ function renderMediaBlock(descriptionText, file, container) {
   const separator = document.createElement('hr');
   const description = document.createElement('p');
   const mediaElement = file.name.endsWith('.mp4') ? document.createElement('video') : document.createElement('img');
-  
+
+  container.appendChild(separator);
   if (descriptionText) {
     description.innerText = descriptionText;
     container.appendChild(description);
@@ -51,7 +52,6 @@ function renderMediaBlock(descriptionText, file, container) {
     mediaElement.controls = true;
   }
 
-  container.appendChild(separator);
   container.appendChild(mediaElement);
 }
 
