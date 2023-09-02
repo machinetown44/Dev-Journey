@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Epic Game Dev CV</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    /* Spice up your life with some custom CSS */
+    hr {
+      margin: 2em 0;
+      border: 0.5px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Your Markdown converted to HTML will live here -->
+  <div id="markdown-content">
+    <!-- A loading message for the mortals waiting for your CV to load -->
+    <p>Loading the awesomeness...</p>
+  </div>
+
+  <!-- The dynamic media content that's cooler than a polar bear's toenails -->
+  <div id="media-container"></div>
+
+  <script>
+    // Markdown fetching and rendering
+    async function fetchAndRenderMarkdown() {
+      const markdownContainer = document.getElementById('markdown-content');
+      const response = await fetch('https://username.github.io/repo-name/CV.md');
+      const markdownText = await response.text();
+      const htmlContent = marked(markdownText);
+      markdownContainer.innerHTML = htmlContent;
+    }
+
+    // Your media fetching code lives here too
+    // ...
+
+    // Kickstart the show
+    window.addEventListener('load', () => {
+      fetchAndRenderMarkdown();
+      fetchAndRenderMedia();
+    });
+  </script>
+
+</body>
+</html>
