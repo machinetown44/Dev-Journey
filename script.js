@@ -36,18 +36,34 @@ async function renderMedia(files, container) {
   });
 }
 
+// Intersection Observer for animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('slide-in-right');
+    }
+  });
+});
+
 function renderMediaBlock(descriptionText, file, container) {
   const mediaItem = document.createElement('div');
   mediaItem.className = 'media-item';
+  observer.observe(mediaItem); // Observe this element
+
   const separator = document.createElement('hr');
   const description = document.createElement('p');
   const mediaElement = file.name.endsWith('.mp4') ? document.createElement('video') : document.createElement('img');
 
   
+
   if (descriptionText) {
     const descriptionHtml = converter.makeHtml(descriptionText);
     description.innerHTML = descriptionHtml;
     mediaItem.appendChild(description);
+  } else {
+    // Center if there is no description
+    mediaItem.style.justifyContent = "center";
+    mediaElement.style.clipPath = "none";
   }
 
   mediaElement.src = file.download_url;
