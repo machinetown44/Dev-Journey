@@ -23,7 +23,7 @@ function renderMedia(files, container) {
   
   mediaFiles.forEach(file => {
     const mediaName = file.name;
-    const descriptionName = mediaName.split('.')[0] + '.txt';
+    const descriptionName = mediaName.split('.')[0] + '.md';
     const descriptionFile = files.find(f => f.name === descriptionName);
 
     if (descriptionFile) {
@@ -43,7 +43,8 @@ function renderMediaBlock(descriptionText, file, container) {
 
   
   if (descriptionText) {
-    description.innerText = descriptionText;
+    const descriptionHtml = converter.makeHtml(descriptionText);
+    description.innerHTML = descriptionHtml;
     container.appendChild(description);
   }
 

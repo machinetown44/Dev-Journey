@@ -24,6 +24,31 @@
       max-width: 80%;
       max-height: 80%;
     }
+    media-item {
+      display: flex;
+      align-items: center;
+      animation: slide-in-right 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
+    .media-item img, .media-item video {
+      clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+      /* ...other styles... */
+    }
+
+    /* Add styles for h1, h2, h3, ... */
+    h1, h2, h3, h4, h5, h6 {
+      color: #FFCC00;
+      text-shadow: 2px 2px 4px #000000;
+    }
+
+    @keyframes slide-in-right {
+      0% {
+        transform: translateX(1000px);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
   </style>
 </head>
 <body>
