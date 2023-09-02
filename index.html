@@ -23,23 +23,26 @@
       display: block;
       max-width: 80%;
       max-height: 80%;
-      clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+      clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
     }
     media-item {
       display: flex;
-      align-items: center;
-      animation: slide-in-right 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      align-items: right;
+      animation: slide-in-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     }
 
+    p {
+      color: rgb(201, 201, 201);
+      font-family: monospace;
+    }
     /* Add styles for h1, h2, h3, ... */
     h1, h2, h3, h4, h5, h6 {
-      color: #c8f2ff;
-      text-shadow: 2px 2px 4px #000000;
+      text-shadow: 2px 2px 4px #0b1b25;
     }
 
     @keyframes slide-in-right {
       0% {
-        transform: translateX(1000px);
+        transform: translateX(100px);
       }
       100% {
         transform: translateX(0);
