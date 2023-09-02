@@ -55,10 +55,10 @@ function renderMediaBlock(descriptionText, file, container) {
   container.appendChild(mediaElement);
 }
 
+const converter = new showdown.Converter();
+
 // Initialization function
 window.addEventListener('load', () => {
-  const converter = new showdown.Converter();
-  
   // Fetch and render CV
   fetchAndRenderContent('.', 'cv-container', renderMarkdownCV);
   
