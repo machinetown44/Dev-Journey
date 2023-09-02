@@ -18,18 +18,18 @@ async function renderMarkdownCV(files, container) {
 }
 
 // Render media files
-function renderMedia(files, container) {
+async function renderMedia(files, container) {
   const mediaFiles = files.filter(file => file.name.endsWith('.mp4') || file.name.endsWith('.gif'));
   
-  mediaFiles.forEach(file => {
+  mediaFiles.forEach(async file => {
     const mediaName = file.name;
     const descriptionName = mediaName.split('.')[0] + '.md';
     const descriptionFile = files.find(f => f.name === descriptionName);
 
     if (descriptionFile) {
-      fetch(descriptionFile.download_url)
-        .then(response => response.text())
-        .then(descriptionText => renderMediaBlock(descriptionText, file, container));
+      const response = await fetch(descriptionFile.download_url);
+      const descriptionText = await response.text();
+      renderMediaBlock(descriptionText, file, container);
     } else {
       renderMediaBlock(null, file, container);
     }
@@ -37,6 +37,8 @@ function renderMedia(files, container) {
 }
 
 function renderMediaBlock(descriptionText, file, container) {
+  const mediaItem = document.createElement('div');
+  mediaItem.className = 'media-item';
   const separator = document.createElement('hr');
   const description = document.createElement('p');
   const mediaElement = file.name.endsWith('.mp4') ? document.createElement('video') : document.createElement('img');
@@ -45,7 +47,7 @@ function renderMediaBlock(descriptionText, file, container) {
   if (descriptionText) {
     const descriptionHtml = converter.makeHtml(descriptionText);
     description.innerHTML = descriptionHtml;
-    container.appendChild(description);
+    mediaItem.appendChild(description);
   }
 
   mediaElement.src = file.download_url;
@@ -53,7 +55,8 @@ function renderMediaBlock(descriptionText, file, container) {
     mediaElement.controls = true;
   }
 
-  container.appendChild(mediaElement);
+  mediaItem.appendChild(mediaElement);
+  container.appendChild(mediaItem);
   container.appendChild(separator);
 }
 
