@@ -41,7 +41,7 @@ function renderMediaBlock(descriptionText, file, container) {
   const description = document.createElement('p');
   const mediaElement = file.name.endsWith('.mp4') ? document.createElement('video') : document.createElement('img');
 
-  container.appendChild(separator);
+  
   if (descriptionText) {
     description.innerText = descriptionText;
     container.appendChild(description);
@@ -53,6 +53,7 @@ function renderMediaBlock(descriptionText, file, container) {
   }
 
   container.appendChild(mediaElement);
+  container.appendChild(separator);
 }
 
 const converter = new showdown.Converter();
