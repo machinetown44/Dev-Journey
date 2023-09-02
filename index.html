@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My experience</title>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="script.js"></script> <!-- Your custom JS file -->
+  <title>My development journey</title>
+  <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+  <script src="script.js"></script> 
   <style>
-    /* The wardrobe department for your HTML */
     hr {
       margin: 2em 0;
       border: 0.5px solid #ccc;
@@ -15,18 +14,13 @@
 </head>
 <body>
 
-  <div id="markdown-content">
-    <p>Loading...</p>
+  <div id="cv-container">
+    <p>Loading CV...</p>
   </div>
-
-  <div id="media-container"></div>
-
-  <script>
-    window.addEventListener('load', () => {
-      fetchAndRenderMarkdown(); // Function from the in-line script
-      fetchAndRenderMedia();   // Function from custom-functions.js
-    });
-  </script>
+  <hr>
+  <div id="media-container">
+    <p>Loading media...</p>
+  </div>
 
 </body>
 </html>

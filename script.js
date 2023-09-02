@@ -1,49 +1,67 @@
-async function fetchAndRenderMedia() {
-  const mediaContainer = document.getElementById('media-container');
+// Fetch from GitHub and render content
+async function fetchAndRenderContent(gitHubFolderPath, containerId, renderFunction) {
+  const container = document.getElementById(containerId);
   
-  // Fetch file list from GitHub repository
-  const response = await fetch('https://api.github.com/repos/machinetown44/Dev-Journey/main/media');
+  const response = await fetch(`https://api.github.com/repos/machinetown44/Dev-Journey/contents/${gitHubFolderPath}`);
   const files = await response.json();
+  renderFunction(files, container);
+}
 
-  // Filter only relevant media files (assuming mp4 and gif)
+// Render Markdown CV
+async function renderMarkdownCV(files, container) {
+  const markdownFile = files.find(file => file.name.endsWith('.md'));
+  const response = await fetch(markdownFile.download_url);
+  const text = await response.text();
+
+  // Convert Markdown to HTML and add to container
+  container.innerHTML = converter.makeHtml(text);
+}
+
+// Render media files
+function renderMedia(files, container) {
   const mediaFiles = files.filter(file => file.name.endsWith('.mp4') || file.name.endsWith('.gif'));
-
-  for (const file of mediaFiles) {
+  
+  mediaFiles.forEach(file => {
     const mediaName = file.name;
     const descriptionName = mediaName.split('.')[0] + '.txt';
+    const descriptionFile = files.find(f => f.name === descriptionName);
 
-    // Fetch description from a text file with the same name as the media
-    const descriptionResponse = await fetch(`https://raw.githubusercontent.com/machinetown44/Dev-Journey/main/media/${descriptionName}`);
-    const descriptionText = await descriptionResponse.text();
-
-    const separator = document.createElement('hr');
-    const description = document.createElement('p');
-    const mediaElement = mediaName.endsWith('.mp4') ? document.createElement('video') : document.createElement('img');
-
-    description.innerText = descriptionText;
-    mediaElement.src = file.download_url;
-    if (mediaName.endsWith('.mp4')) {
-      mediaElement.controls = true;
+    if (descriptionFile) {
+      fetch(descriptionFile.download_url)
+        .then(response => response.text())
+        .then(descriptionText => renderMediaBlock(descriptionText, file, container));
+    } else {
+      renderMediaBlock(null, file, container);
     }
-
-    mediaContainer.appendChild(separator);
-    mediaContainer.appendChild(description);
-    mediaContainer.appendChild(mediaElement);
-  }
+  });
 }
 
-
-async function fetchAndRenderMarkdown() {
-  const markdownContainer = document.getElementById('markdown-content');
-  const response = await fetch('https://username.github.io/repo-name/CV.md');
-  const markdownText = await response.text();
-  const htmlContent = marked(markdownText);
+function renderMediaBlock(descriptionText, file, container) {
+  const separator = document.createElement('hr');
+  const description = document.createElement('p');
+  const mediaElement = file.name.endsWith('.mp4') ? document.createElement('video') : document.createElement('img');
   
-  markdownContainer.innerHTML = htmlContent;
+  if (descriptionText) {
+    description.innerText = descriptionText;
+    container.appendChild(description);
+  }
+
+  mediaElement.src = file.download_url;
+  if (file.name.endsWith('.mp4')) {
+    mediaElement.controls = true;
+  }
+
+  container.appendChild(separator);
+  container.appendChild(mediaElement);
 }
 
-// Trigger fill on page load
+// Initialization function
 window.addEventListener('load', () => {
-  fetchAndRenderMarkdown();
-  fetchAndRenderMedia();
+  const converter = new showdown.Converter();
+  
+  // Fetch and render CV
+  fetchAndRenderContent('.', 'cv-container', renderMarkdownCV);
+  
+  // Fetch and render media
+  fetchAndRenderContent('media', 'media-container', renderMedia);
 });
