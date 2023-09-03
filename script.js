@@ -19,7 +19,7 @@ async function renderMarkdownCV(files, container) {
 
 // Render media files
 async function renderMedia(files, container) {
-  const mediaFiles = files.filter(file => file.name.endsWith('.mp4') || file.name.endsWith('.gif'));
+  const mediaFiles = files.filter(file => file.name.endsWith('.mp4') || file.name.endsWith('.gif')).reverse();
   
   mediaFiles.forEach(async file => {
     const mediaName = file.name;
