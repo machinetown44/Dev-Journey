@@ -57,6 +57,8 @@ function renderMediaBlock(descriptionText, file, container) {
   
 
   if (descriptionText) {
+    description.style.flex = "1";
+    mediaElement.style.flex = "2";
     const descriptionHtml = converter.makeHtml(descriptionText);
     description.innerHTML = descriptionHtml;
     mediaItem.appendChild(description);
