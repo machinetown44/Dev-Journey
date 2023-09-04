@@ -53,7 +53,7 @@ function renderMediaBlock(descriptionText, file, container) {
   const separator = document.createElement('hr');
   const description = document.createElement('p');
   const mediaElement = file.name.endsWith('.mp4') ? document.createElement('video') : document.createElement('img');
-
+  mediaElement.crossOrigin = "anonymous";
   
 
   if (descriptionText) {
